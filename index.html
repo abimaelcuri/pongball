@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MP Game</title>
+        <script src="game.js"></script>
+        <script src="node_modules/socket.io/client-dist/socket.io.min.js"></script>
+        <style>
+            #quadro {
+                width: 100%;
+                height: 100%;
+            }
+            html, body{
+                margin: 0;
+                padding: 0;
+                border: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <canvas id="quadro"></canvas>
+        <script>
+            start();
+            
+            var socket = io("localhost:8081");
+
+            
+            socket.on("connect", () => {
+            console.log(socket.id); // "G5p5..."
+            });
+        </script>
+    </body>
+</html>
