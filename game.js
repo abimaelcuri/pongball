@@ -9,6 +9,18 @@ function start(){
         y: 0
     };
 
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+
+    setInterval(function(){
+        socket.emit("move", JSON.stringify(mousePos) );
+    }, 120)
+
     window.onmousemove = function(e){
         mousePos.x = e.clientX;
         mousePos.y = e.clientY;

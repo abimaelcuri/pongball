@@ -23,14 +23,24 @@
     <body>
         <canvas id="quadro"></canvas>
         <script>
-            start();
             
             var socket = io("localhost:8081");
 
-            
             socket.on("connect", () => {
-            console.log(socket.id); // "G5p5..."
+                console.log(socket.id); // "G5p5..."
+
+                start();
+
+                setTimeout(function(){
+                    socket.send("heitor");
+                    socket.emit("heitor", "legal");
+                }, 1000)
             });
+
+            socket.on('user', function(data){
+                console.log(data);
+            });
+            
         </script>
     </body>
 </html>
