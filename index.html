@@ -25,6 +25,7 @@
         <script>
             
             var socket = io("localhost:8081");
+            var users = {};
 
             socket.on("connect", () => {
                 console.log(socket.id); // "G5p5..."
@@ -38,7 +39,8 @@
             });
 
             socket.on('user', function(data){
-                console.log(data);
+                //if(typeof users[data.id] == "undefined")
+                users[data.id] = JSON.parse(data.data);
             });
             
         </script>

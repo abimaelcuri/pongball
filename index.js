@@ -16,8 +16,8 @@ io.on("connect", (socket) => {
         let users = Object.fromEntries(io.sockets.sockets);
 
         for(let user in users){
-            console.log(users[user])
-            if(socket.id == users[user]) continue;
+            //console.log(users[user])
+            if(socket.id == users[user].id) continue;
 
             users[user].emit("user", {
                 id: socket.id,

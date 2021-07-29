@@ -18,8 +18,10 @@ function start(){
     }
 
     setInterval(function(){
+        //x:element.width / mousePos.x,
+        //y:element.height / mousePos.y
         socket.emit("move", JSON.stringify(mousePos) );
-    }, 120)
+    }, 16)
 
     window.onmousemove = function(e){
         mousePos.x = e.clientX;
@@ -33,6 +35,14 @@ function start(){
     let altura = element.height * .75;
     let posX = 0;
 
+    let lines = [];
+    const addLine = (posX, posY, size) => {
+        ctx.beginPath();
+        ctx.moveTo(posX, posY);
+        ctx.lineTo(posX + size, posY);
+        ctx.stroke();
+    }
+    
     const render = () => {
         // solicita novo waiter de frame
         requestAnimationFrame(render);
@@ -43,10 +53,12 @@ function start(){
         // põe a posição no meio do mouse
         posX = mousePos.x - (comprimento / 2);
 
-        ctx.beginPath();
-        ctx.moveTo(posX, altura);
-        ctx.lineTo(posX + comprimento, altura);
-        ctx.stroke();
+        
+        addLine(posX, altura, comprimento)
+        
+        for(let i in users)
+            addLine(users[i].x, altura - 100, comprimento)
+
     }
     
     // inicia a renderização
