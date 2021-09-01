@@ -21,7 +21,7 @@ function start(){
         //x:element.width / mousePos.x,
         //y:element.height / mousePos.y
         socket.emit("move", JSON.stringify(mousePos) );
-    }, 16)
+    }, 100)//16)
 
     window.onmousemove = function(e){
         mousePos.x = e.clientX;

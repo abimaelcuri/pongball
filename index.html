@@ -18,30 +18,59 @@
                 border: 0;
             }
 
+            #userStartup{
+                width: 100%;
+                height: 100%;
+                position:absolute;
+                top: 0;
+                left: 0;
+                background: #ccc;
+            }
+            #userStartup.opened{
+                display: none
+            }
+
         </style>
     </head>
     <body>
+        <div id="userStartup">
+            Insira seu nome:
+            <input type="text" id="name" minlength=1>
+            <input type="button" onclick="startup()" value="Start">
+        </div>
+
         <canvas id="quadro"></canvas>
         <script>
             
-            var socket = io("localhost:8081");
-            var users = {};
+            var socket, users;
 
-            socket.on("connect", () => {
-                console.log(socket.id); // "G5p5..."
+            function startup(){
 
-                start();
+                var name = document.getElementById("name").value;
+                if(!name.length) return false;
 
-                setTimeout(function(){
-                    socket.send("heitor");
-                    socket.emit("heitor", "legal");
-                }, 1000)
-            });
+                document.getElementById("userStartup").className = "opened";
 
-            socket.on('user', function(data){
-                //if(typeof users[data.id] == "undefined")
-                users[data.id] = JSON.parse(data.data);
-            });
+                socket = io("localhost:8081");
+                users = {};
+
+                socket.on("connect", () => {
+                    console.log(socket.id); // "G5p5..."
+
+                    socket.emit("user", {
+                        name
+                    });
+                    
+                    setTimeout(function(){
+                        start();
+                    }, 1000)
+                });
+
+                socket.on('user', function(data){
+                    //if(typeof users[data.id] == "undefined")
+                    users[data.id] = JSON.parse(data.data);
+                });
+            }
             
         </script>
     </body>
