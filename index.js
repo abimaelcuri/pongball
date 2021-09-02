@@ -1,6 +1,3 @@
-
-const createWatcher = require("./watcher.js")
-
 const httpServer = require("http").createServer();
 global.io = require("socket.io")(httpServer, {
     cors: {
